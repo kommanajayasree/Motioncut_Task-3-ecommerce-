@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Product Page</title>
+    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Add some basic styles for the cart */
+        .cart {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .cart h2 {
+            margin-top: 0;
+        }
+        .cart ul {
+            list-style: none;
+            padding: 0;
+        }
+        .cart ul li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .cart .total {
+            font-weight: bold;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>E-Commerce Store</h1>
+    </header>
+    
+    <nav>
+        <div class="logo">TURMS Men's Crimson Cotton Blend Mandarin T-Shirt, Anti Stain & Anti Odor, Comfortable, Casual</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Offers</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <i class="fas fa-shopping-cart"></i>
+        </ul>
+    </nav>
+
+    <div class="flex-box">
+        <div class="left">
+            <div class="big-img">
+                <img src="Images/Shirt1.png" alt="Main Product Image">
+            </div>
+            <div class="images">
+                <div class="small-img">
+                    <img src="Images/Shirt1.png" onclick="showImg(this.src)" alt="Product Image 1">
+                </div>
+                <div class="small-img">
+                    <img src="Images/Shirt2.png" onclick="showImg(this.src)" alt="Product Image 2">
+                </div>
+                <div class="small-img">
+                    <img src="Images/Shirt3.png" onclick="showImg(this.src)" alt="Product Image 3">
+                </div>
+                <div class="small-img">
+                    <img src="Images/Shirt4.png" onclick="showImg(this.src)" alt="Product Image 4">
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="url">Home > Product > T-Shirt</div>
+            <div class="pname">T-Shirts for Men</div>
+            <div class="ratings">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="price" id="product-price">$12.99</div>
+            <div class="size">
+                <p>Size :</p>
+                <div class="psize">S</div>
+                <div class="psize">M</div>
+                <div class="psize">L</div>
+                <div class="psize">XL</div>
+            </div>
+            <div class="quantity">
+                <p>Quantity :</p>
+                <input type="number" id="quantity" min="1" max="50" value="1">
+            </div>
+            <br>
+            <div class="description">
+                <ul>
+                    <li>FABRIC: Cotton Blend | Collar: Mandarin</li>
+                    <li>ANTI STAIN</li>
+                    <li>ANTI-ODOR TECHNOLOGY</li>
+                    <li>DENNIS LINGO</li>
+                </ul>
+            </div>
+            <div class="btn-box">
+                <button class="cart-btn" onclick="addToCart()">Add to Cart</button>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart" id="cart">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items"></ul>
+        <div class="total" id="cart-total">Total: $0.00</div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 E-commerce Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let bigImg = document.querySelector('.big-img img');
+
+        function showImg(pic) {
+            bigImg.src = pic;
+        }
+
+        let cart = [];
+        const productPrice = parseFloat(document.getElementById('product-price').innerText.replace('$', ''));
+
+        function addToCart() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const cartItem = {
+                name: 'T-Shirt',
+                price: productPrice,
+                quantity: quantity
+            };
+            cart.push(cartItem);
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `${item.name} x ${item.quantity} <span>$${(item.price * item.quantity).toFixed(2)}</span>`;
+                cartItems.appendChild(listItem);
+                total += item.price * item.quantity;
+            });
+
+            document.getElementById('cart-total').innerText = `Total: $${total.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
